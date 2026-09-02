@@ -1,9 +1,17 @@
 # CLAUDE.md — Proyecto ABCD (Productos Categoría D)
 
-Carpeta: `E:\SQL\ABCD\`
+Carpeta: `E:\ABCD\`
 Repo GitHub: https://github.com/oviedoem/ag-categorias
 App pública: https://oviedoem.github.io/ag-categorias/
 Última actualización: 2026-08-25 | v1.0
+
+## REGLA FLUJO ACTUAL — leer al inicio de cada sesión
+
+Revisar fechas de modificación de archivos en la raíz. Los más recientes marcan el flujo actual:
+```powershell
+Get-ChildItem "E:\ABCD" -File | Sort-Object LastWriteTime -Descending | Select-Object Name, LastWriteTime | Select-Object -First 15
+```
+Un `.py`, `.json` o `.html` con fecha reciente puede indicar pipeline nuevo no documentado aún.
 
 ## Propósito
 Visualizar productos con categoría D (sin venta año móvil, con stock disponible)
@@ -27,13 +35,13 @@ de 5 sucursales. Muestra última fecha de venta histórica + rotación 3/6/12/24
 
 ## Para regenerar data_d.json
 ```powershell
-E:\python-portable\python.exe "E:\SQL\ABCD\generar_data.py"
+E:\python-portable\python.exe "E:\ABCD\generar_data.py"
 ```
 Luego: `git add data_d.json && git commit -m "data: actualizar D" && git push`
 
 ## Para servir localmente
 ```powershell
-E:\python-portable\python.exe -m http.server 8090 --directory "E:\SQL\ABCD"
+E:\python-portable\python.exe -m http.server 8090 --directory "E:\ABCD"
 # Abrir: http://localhost:8090
 ```
 
