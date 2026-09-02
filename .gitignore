@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 *.py
 *.json.bak
+
+# Datos generados — no van a git
+data_d.json
+*.json
