@@ -13,6 +13,13 @@ Get-ChildItem "E:\ABCD" -File | Sort-Object LastWriteTime -Descending | Select-O
 ```
 Un `.py`, `.json` o `.html` con fecha reciente puede indicar pipeline nuevo no documentado aún.
 
+## PENDIENTE (sesión 2026-09-05, sin corregir a pedido del usuario)
+`generar_data.py` corrió bien (los 5 pasos, `data_d.json` se escribió a las 23:13, sin cambios
+de datos vs lo ya commiteado) pero crashea en el último `print()` de éxito con
+`UnicodeEncodeError` (carácter `✓`, consola cp1252) — mismo bug visto hoy en 6 scripts más del
+ecosistema (fix ya validado: `sys.stdout.reconfigure(encoding='utf-8')`). Además el proceso
+quedó vivo ~28 min después del crash sin usar CPU, sin causa clara — no investigado más.
+
 ## Propósito
 Visualizar productos con categoría D (sin venta año móvil, con stock disponible)
 de 5 sucursales. Muestra última fecha de venta histórica + rotación 3/6/12/24 meses.
