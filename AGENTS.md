@@ -1,4 +1,4 @@
-# AGENTS.md — App ABCD Foviedo
+# AGENTS.md — App ABCD Sistemas A.G.
 
 Última actualización: 2026-08-25 | Versión app: v1.0
 
@@ -8,7 +8,7 @@ Agrega la última fecha de venta histórica + rotación 3/6/12/24 meses desde SQ
 
 ## URL pública
 https://oviedoem.github.io/ag-categorias/
-Login: rrojas / categoriaD (hash SHA-256, no guardar contraseña en texto claro)
+Login: usuario `rrojas` (hash SHA-256 embebido en index.html — la contraseña real NUNCA se guarda en archivos de texto, ver CLAUDE.md)
 
 ## Cómo actualizar datos
 1. El jefe entrega nuevo Excel con productos D → guardar en `C:\Users\alejandro\Desktop\D para Alejandro.xlsx`
@@ -52,6 +52,15 @@ ANTES de tocar cualquier archivo:
 | index.html | ✅ | App principal con login embebido |
 | data_d.json | ❌ | Generado por script (NO va a git, ver .gitignore) |
 | generar_data.py | ✅ | Script de regeneración (excluido de git) |
+| data_360.json | ❌ | Pestaña "Extracto 360 días" — generado por script (NO va a git) |
+| generar_data_360.py | ✅ | Regenera data_360.json (excluido de git) |
+| agregar_stock_360.py | ✅ | Merge puntual 2026-09-12 (excluido de git) |
+| agregar_bodegas.py | ✅ | Agrega desglose Bodega Disp./Físico (excluido de git) |
+| agregar_costo.py | ✅ | Agrega Costo Prom. real (excluido de git) |
+| agregar_abc.py | ✅ | Agrega categoría ABC (excluido de git) |
+| recalcular_valorizado.py | ✅ | Recalcula Stock Valorizado = Costo x Disp (excluido de git) |
+| agregar_costo_actualizar_em.py | ✅ | Rellena costo/desc de El Manzano desde actualizar.xlsx (excluido de git) |
+| actualizar.xlsx | ❌ | Export fresco del jefe, El Manzano + CD (NO va a git) |
 | IDS_REFERENCIA_ABCD.md | ✅ | IDs de sucursales, bodegas, tablas SQLite |
 | CLAUDE.md | ✅ | Instrucciones técnicas del proyecto |
 | AGENTS.md | ✅ | Este archivo |

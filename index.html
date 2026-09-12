@@ -3,49 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foviedo — Productos Categoría D</title>
+<title>Sistemas A.G. — Productos Categoría D</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg-base:#0d1117;--bg-surface:#161b22;--bg-card:#1c2128;
-  --border:#30363d;--text-main:#e6edf3;--text-muted:#8b949e;
-  --accent-C:#388bfd;--accent-P:#3fb950;--accent-I:#d29922;
-  --accent-red:#f85149;--accent-pur:#a371f7;
+  --bg-base:#0a0e16;--bg-surface:#131926;--bg-card:#1a2233;
+  --border:#2a3348;--text-main:#eaf0fb;--text-muted:#8b96ac;
+  --accent-C:#5b8def;--accent-C2:#7c6cf0;--accent-P:#3ecf8e;--accent-I:#e0a83e;
+  --accent-red:#f2564a;--accent-pur:#b18cf5;
+  --grad-brand:linear-gradient(135deg,#5b8def,#7c6cf0);
+  --shadow-sm:0 1px 2px #0006;--shadow-md:0 8px 24px #00000055;
 }
+/* LOGO / MARCA */
+.brand-mark{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;flex:0 0 auto;filter:drop-shadow(0 2px 8px #f2564a4d)}
+.brand-mark svg{width:100%;height:100%}
+.brand-mark.lg{width:54px;height:54px;filter:drop-shadow(0 6px 16px #f2564a59)}
+.brand-row{display:flex;align-items:center;gap:10px}
 /* LOGIN */
-#login-screen{position:fixed;inset:0;background:var(--bg-base);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:0}
-.login-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;padding:40px 36px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:18px;box-shadow:0 8px 32px #00000066}
-.login-logo{text-align:center;margin-bottom:4px}
-.login-logo span{font-size:28px;font-weight:800;color:var(--accent-C);letter-spacing:-0.5px}
-.login-logo small{display:block;font-size:11px;color:var(--text-muted);margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
+#login-screen{position:fixed;inset:0;background:radial-gradient(circle at 30% 20%,#182238 0%,var(--bg-base) 55%);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:0}
+.login-card{background:linear-gradient(180deg,var(--bg-surface),var(--bg-card));border:1px solid var(--border);border-radius:16px;padding:40px 36px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow-md),0 0 0 1px #ffffff08 inset}
+.login-logo{text-align:center;margin-bottom:4px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.login-logo .brand-row{justify-content:center}
+.login-logo span{font-size:22px;font-weight:800;color:var(--text-main);letter-spacing:-0.3px}
+.login-logo small{display:block;font-size:11px;color:var(--text-muted);margin-top:2px;letter-spacing:.5px;text-transform:uppercase}
 .login-field{display:flex;flex-direction:column;gap:6px}
 .login-field label{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.login-field input{background:var(--bg-card);border:1px solid var(--border);color:var(--text-main);padding:10px 14px;border-radius:6px;font-size:14px;outline:none;transition:border .2s}
-.login-field input:focus{border-color:var(--accent-C)}
-.login-btn{background:var(--accent-C);color:#fff;border:none;padding:11px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;letter-spacing:.3px}
-.login-btn:hover{opacity:.85}
+.login-field input{background:var(--bg-base);border:1px solid var(--border);color:var(--text-main);padding:10px 14px;border-radius:8px;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s}
+.login-field input:focus{border-color:var(--accent-C);box-shadow:0 0 0 3px #5b8def26}
+.login-btn{background:var(--grad-brand);color:#fff;border:none;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:filter .2s,transform .15s;letter-spacing:.3px;box-shadow:0 4px 14px #5b8def40}
+.login-btn:hover{filter:brightness(1.1)}
+.login-btn:active{transform:translateY(1px)}
 .login-btn:disabled{opacity:.5;cursor:default}
 .login-error{color:var(--accent-red);font-size:12px;text-align:center;min-height:16px}
 .login-footer{text-align:center;font-size:10px;color:var(--text-muted);margin-top:4px}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 .shake{animation:shake .4s ease}
-body{font-family:system-ui,-apple-system,sans-serif;font-size:13px;background:var(--bg-base);color:var(--text-main);min-height:100vh;display:flex;flex-direction:column}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;background:var(--bg-base);color:var(--text-main);min-height:100vh;display:flex;flex-direction:column;font-variant-numeric:tabular-nums}
 /* TOPBAR */
-.topbar{background:var(--bg-surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.topbar-logo{font-size:15px;font-weight:700;color:var(--accent-C);letter-spacing:.5px;white-space:nowrap}
-.topbar-title{font-size:13px;color:var(--text-muted)}
+.topbar{background:var(--bg-surface);border-bottom:1px solid var(--border);padding:11px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:var(--shadow-sm)}
+.topbar-logo{font-size:14.5px;font-weight:700;color:var(--text-main);letter-spacing:.2px;white-space:nowrap}
+.topbar-title{font-size:12.5px;color:var(--text-muted)}
 .topbar-right{margin-left:auto;font-size:11px;color:var(--text-muted)}
+/* TABS */
+.tabs-bar{background:var(--bg-surface);border-bottom:1px solid var(--border);padding:6px 16px;display:flex;gap:4px}
+.tab-btn{background:transparent;border:none;border-radius:8px;color:var(--text-muted);padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;transition:color .25s ease,background .25s ease}
+.tab-btn.on{color:#fff;background:var(--grad-brand);box-shadow:0 2px 10px #5b8def40}
+.tab-btn:not(.on):hover{color:var(--text-main);background:var(--bg-card)}
 /* FILTROS */
-.filters-bar{background:var(--bg-card);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.filters-bar label{font-size:11px;color:var(--text-muted);white-space:nowrap}
-select,input[type=text]{background:var(--bg-surface);border:1px solid var(--border);color:var(--text-main);padding:4px 8px;border-radius:4px;font-size:12px;min-width:140px}
-select:focus,input:focus{outline:none;border-color:var(--accent-C)}
-.btn{padding:5px 12px;border-radius:4px;border:none;font-size:12px;cursor:pointer;font-weight:600}
-.btn-primary{background:var(--accent-C);color:#fff}
-.btn-primary:hover{opacity:.85}
-.btn-success{background:var(--accent-P);color:#000}
-.btn-success:hover{opacity:.85}
+.filters-bar{background:var(--bg-card);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filters-bar label{font-size:11px;color:var(--text-muted);white-space:nowrap;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+select,input[type=text]{background:var(--bg-surface);border:1px solid var(--border);color:var(--text-main);padding:6px 10px;border-radius:7px;font-size:12px;min-width:140px;transition:border-color .2s}
+select:focus,input:focus{outline:none;border-color:var(--accent-C);box-shadow:0 0 0 3px #5b8def26}
+.btn{padding:7px 14px;border-radius:7px;border:none;font-size:12px;cursor:pointer;font-weight:600;transition:filter .2s,transform .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--grad-brand);color:#fff;box-shadow:0 2px 8px #5b8def33}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-success{background:var(--accent-P);color:#04231a;box-shadow:0 2px 8px #3ecf8e33}
+.btn-success:hover{filter:brightness(1.08)}
 .btn-clear{background:var(--bg-surface);color:var(--text-muted);border:1px solid var(--border)}
+.btn-clear:hover{color:var(--text-main);border-color:var(--accent-C)}
+/* GRAFICOS */
+.charts-bar{display:flex;align-items:center;gap:10px;padding:4px 20px 0;flex-wrap:wrap}
+.charts-bar label{font-size:11px;color:var(--text-muted)}
+.metric-toggle{display:inline-flex;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.metric-toggle button{background:transparent;border:none;color:var(--text-muted);padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .25s ease,color .25s ease}
+.metric-toggle button.on{background:var(--accent-C);color:#fff}
+.metric-toggle button:not(.on):hover{background:var(--bg-surface);color:var(--text-main)}
+.charts-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px;padding:10px 20px 4px}
+.chart-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.22,1,.36,1) forwards}
+.chart-card:nth-child(1){animation-delay:.02s}
+.chart-card:nth-child(2){animation-delay:.07s}
+.chart-card:nth-child(3){animation-delay:.12s}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+.chart-card h3{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.chart-card .chart-wrap{position:relative;height:220px}
+@media (max-width:1100px){.charts-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion: reduce){
+  .chart-card{animation:none;opacity:1;transform:none}
+  .metric-toggle button{transition:none}
+}
 /* KPIs */
 .kpis{display:flex;gap:12px;padding:14px 20px;flex-wrap:wrap}
 .kpi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;min-width:150px;flex:1}
@@ -85,14 +125,36 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:6
 .pagination button{background:var(--bg-surface);border:1px solid var(--border);color:var(--text-main);padding:3px 10px;border-radius:4px;cursor:pointer}
 .pagination button:hover{border-color:var(--accent-C);color:var(--accent-C)}
 .pagination button:disabled{opacity:.4;cursor:default}
+/* FONDO ANIMADO (login) */
+#login-bg{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+#login-bg span{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;will-change:transform}
+#login-bg span:nth-child(1){width:420px;height:420px;background:#5b8def;top:-120px;left:-80px;animation:float1 16s ease-in-out infinite}
+#login-bg span:nth-child(2){width:360px;height:360px;background:#7c6cf0;bottom:-100px;right:-60px;animation:float2 20s ease-in-out infinite}
+#login-bg span:nth-child(3){width:260px;height:260px;background:#3ecf8e;bottom:10%;left:8%;opacity:.18;animation:float1 24s ease-in-out infinite reverse}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,30px) scale(1.08)}}
+@keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-35px,-25px) scale(1.1)}}
+.login-card{position:relative;z-index:1}
+@media (prefers-reduced-motion: reduce){
+  #login-bg span{animation:none}
+}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff6a5a"/>
+      <stop offset="100%" stop-color="#d81f3f"/>
+    </linearGradient>
+  </defs>
+</svg>
 <!-- LOGIN SCREEN -->
 <div id="login-screen">
+  <div id="login-bg"><span></span><span></span><span></span></div>
   <div class="login-card">
     <div class="login-logo">
-      <span>⚠ Foviedo</span>
+      <div class="brand-mark lg"><svg viewBox="0 0 24 24"><path d="M12 3.2 L21 19.6 H3 Z" fill="url(#brandGrad)" stroke="url(#brandGrad)" stroke-width="2.6" stroke-linejoin="round"/><path d="M12 9.3v5.2" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/><circle cx="12" cy="17.1" r="1.1" fill="#fff"/></svg></div>
+      <span>Sistemas A.G.</span>
       <small>Categorías de Inventario — Acceso Restringido</small>
     </div>
     <div class="login-field">
@@ -112,14 +174,33 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:6
 <div id="loading" class="hidden">Cargando datos…</div>
 
 <div class="topbar">
-  <div class="topbar-logo">⚠ Foviedo — Categoría D</div>
+  <div class="topbar-logo brand-row"><div class="brand-mark"><svg viewBox="0 0 24 24"><path d="M12 3.2 L21 19.6 H3 Z" fill="url(#brandGrad)" stroke="url(#brandGrad)" stroke-width="2.6" stroke-linejoin="round"/><path d="M12 9.3v5.2" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/><circle cx="12" cy="17.1" r="1.1" fill="#fff"/></svg></div><span>Sistemas A.G. <span style="color:var(--text-muted);font-weight:500">— Categoría D</span></span></div>
   <div class="topbar-title">Productos sin venta año móvil · Con stock disponible · Por sucursal</div>
   <div class="topbar-right" id="ts-update"></div>
+</div>
+
+<div class="tabs-bar">
+  <button type="button" class="tab-btn on" id="tab-d" onclick="switchTab('d')">Categoría D (completo)</button>
+  <button type="button" class="tab-btn" id="tab-360" onclick="switchTab('360')">Extracto 360 días (solo SQL)</button>
 </div>
 
 <div class="filters-bar">
   <label>Sucursal</label>
   <select id="f-suc"><option value="">Todas</option></select>
+  <label>Categoría</label>
+  <select id="f-abc">
+    <option value="">Todas</option>
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+    <option value="D" selected>D</option>
+  </select>
+  <label>Stock</label>
+  <select id="f-stock">
+    <option value="">Todos</option>
+    <option value="con">Con stock</option>
+    <option value="sin">Sin stock</option>
+  </select>
   <label>Familia</label>
   <select id="f-fam"><option value="">Todas</option></select>
   <label>Subfamilia</label>
@@ -142,6 +223,29 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:6
 
 <div class="kpis" id="kpis"></div>
 
+<div class="charts-bar">
+  <label>Métrica de los gráficos</label>
+  <div class="metric-toggle">
+    <button type="button" id="m-val" class="on" onclick="setMetric('val')">Valorizado $</button>
+    <button type="button" id="m-unid" onclick="setMetric('unid')">Unidades</button>
+  </div>
+</div>
+
+<div class="charts-grid">
+  <div class="chart-card">
+    <h3>Por Sucursal — barras + Nº productos</h3>
+    <div class="chart-wrap"><canvas id="chart-suc"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <h3>Top 10 Marcas</h3>
+    <div class="chart-wrap"><canvas id="chart-marca"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <h3>Top 10 Familias</h3>
+    <div class="chart-wrap"><canvas id="chart-familia"></canvas></div>
+  </div>
+</div>
+
 <div class="pagination" id="pag-top"></div>
 
 <div class="table-wrap">
@@ -156,12 +260,11 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:6
         <th data-col="descripcion" onclick="sortBy('descripcion')">Descripción</th>
         <th data-col="hiper" onclick="sortBy('hiper')">Hiperfamilia</th>
         <th data-col="stock_disp" onclick="sortBy('stock_disp')" class="num">Stock Disp.</th>
+        <th data-col="bodega_fis" onclick="sortBy('bodega_fis')" class="num" title="Stock Físico real (SQL) de Sala + Patio de la sucursal">Bodega Físico</th>
+        <th data-col="costo_prom" onclick="sortBy('costo_prom')" class="num" title="Costo Promedio Ponderado por unidad, dato real de SQL (bodega Sala)">Costo Prom. $</th>
         <th data-col="stock_val" onclick="sortBy('stock_val')" class="num">Stock Valoriz. $</th>
         <th data-col="ultima_venta" onclick="sortBy('ultima_venta')">Última Venta</th>
-        <th data-col="r3m" onclick="sortBy('r3m')" class="num" title="Venta neta últimos 3 meses">Rot. 3M $</th>
-        <th data-col="r6m" onclick="sortBy('r6m')" class="num" title="Venta neta últimos 6 meses">Rot. 6M $</th>
         <th data-col="r12m" onclick="sortBy('r12m')" class="num" title="Venta neta últimos 12 meses">Rot. 12M $</th>
-        <th data-col="r24m" onclick="sortBy('r24m')" class="num" title="Venta neta últimos 24 meses">Rot. 24M $</th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>
@@ -172,7 +275,7 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:6
 
 <footer>
   <span id="ft-total"></span>
-<span>App: Foviedo ABCD v1.0 · 2026-08-25</span>
+<span>App: Sistemas A.G. ABCD v1.1 · 2026-09-12</span>
 </footer>
 
 <script>
@@ -219,7 +322,8 @@ if(sessionStorage.getItem('auth')==='ok'){
 
 // ── APP ──────────────────────────────────────────────────────────────────────
 const PAGE = 200;
-let DATA = [], filtered = [], sortCol = 'tienda', sortDir = 1, page = 0;
+let DATA = [], filtered = [], sortCol = 'stock_disp', sortDir = -1, page = 0;
+
 function multiSort(a,b){
   const cols=['tienda','marca','familia','subfamilia'];
   for(const c of cols){let r=String(a[c]||'').localeCompare(String(b[c]||''));if(r)return r;}
@@ -245,6 +349,8 @@ function uvLabel(uv){
 function populate(){
   // filtros
   const suc=document.getElementById('f-suc').value;
+  const abc=document.getElementById('f-abc').value;
+  const stockF=document.getElementById('f-stock').value;
   const fam=document.getElementById('f-fam').value;
   const sub=document.getElementById('f-sub').value;
   const marca=document.getElementById('f-marca').value;
@@ -252,6 +358,9 @@ function populate(){
   const q=document.getElementById('f-search').value.toLowerCase().trim();
   filtered=DATA.filter(p=>{
     if(suc && p.tienda!==suc) return false;
+    if(abc && p.abc!==abc) return false;
+    if(stockF==='con' && !(p.stock_disp>0)) return false;
+    if(stockF==='sin' && !(!p.stock_disp||p.stock_disp<=0)) return false;
     if(fam && p.familia!==fam) return false;
     if(sub && p.subfamilia!==sub) return false;
     if(marca && p.marca!==marca) return false;
@@ -273,6 +382,7 @@ function populate(){
     });
   }
   renderKPIs();
+  renderCharts();
   renderTable();
   renderPag();
 }
@@ -290,11 +400,117 @@ function renderKPIs(){
   `;
 }
 
+// ── GRAFICOS (Chart.js) ──────────────────────────────────────────────────────
+// Metrica: 'val' = Stock Valorizado $ (stock_val) | 'unid' = Unidades (stock_disp).
+// Se agrupa lo que ya existe en cada producto (sin calcular nada nuevo) sobre el
+// conjunto YA FILTRADO ('filtered') -- por eso los graficos interactuan con todos
+// los filtros de arriba (sucursal, familia, marca, ultima venta, busqueda).
+let chartMetric = 'val';
+let chartSuc, chartMarca, chartFamilia;
+const CHART_COLORS = ['#388bfd','#3fb950','#d29922','#f85149','#a371f7','#39c5cf','#f778ba','#56d364'];
+
+function setMetric(m){
+  chartMetric = m;
+  document.getElementById('m-val').classList.toggle('on', m==='val');
+  document.getElementById('m-unid').classList.toggle('on', m==='unid');
+  renderCharts();
+}
+
+function metricLabel(){ return chartMetric==='val' ? 'Stock Valorizado $' : 'Unidades'; }
+function metricValue(p){ return chartMetric==='val' ? p.stock_val : p.stock_disp; }
+
+function topN(map, n){
+  return [...map.entries()].sort((a,b)=>b[1]-a[1]).slice(0,n);
+}
+
+function initCharts(){
+  const commonAnim = { duration: 550, easing: 'easeOutCubic' };
+  const commonHover = { animationDuration: 250 };
+  const commonOpts = {
+    responsive:true, maintainAspectRatio:false,
+    animation: commonAnim,
+    hover: { mode:'nearest', intersect:true, animationDuration: 250 },
+    interaction: { mode:'nearest', intersect:true },
+    plugins:{
+      legend:{ labels:{ color:'#8b949e', font:{size:11} } },
+      tooltip:{ backgroundColor:'#1c2128', borderColor:'#30363d', borderWidth:1, titleColor:'#e6edf3', bodyColor:'#e6edf3', padding:10 }
+    },
+    scales:{
+      x:{ ticks:{ color:'#8b949e', font:{size:10} }, grid:{ color:'#30363d' } },
+      y:{ ticks:{ color:'#8b949e', font:{size:10} }, grid:{ color:'#30363d' } }
+    }
+  };
+
+  chartSuc = new Chart(document.getElementById('chart-suc'), {
+    data:{ labels:[], datasets:[
+      { type:'bar', label:'', data:[], backgroundColor:'#388bfd', borderRadius:4, order:2 },
+      { type:'line', label:'Nº productos', data:[], borderColor:'#d29922', backgroundColor:'#d29922', yAxisID:'y1', tension:.35,
+        pointRadius:4, pointHoverRadius:8, pointBackgroundColor:'#d29922', order:1 },
+    ]},
+    options:{ ...commonOpts,
+      scales:{ ...commonOpts.scales,
+        y1:{ position:'right', ticks:{ color:'#d29922', font:{size:10} }, grid:{ display:false } }
+      }
+    }
+  });
+
+  chartMarca = new Chart(document.getElementById('chart-marca'), {
+    type:'bar',
+    data:{ labels:[], datasets:[{ label:'', data:[], backgroundColor:CHART_COLORS, borderRadius:4,
+      hoverBackgroundColor:CHART_COLORS.map(c=>c+'cc') }] },
+    options:{ ...commonOpts, indexAxis:'y', plugins:{...commonOpts.plugins, legend:{display:false}} }
+  });
+
+  chartFamilia = new Chart(document.getElementById('chart-familia'), {
+    type:'bar',
+    data:{ labels:[], datasets:[{ label:'', data:[], backgroundColor:CHART_COLORS, borderRadius:4,
+      hoverBackgroundColor:CHART_COLORS.map(c=>c+'cc') }] },
+    options:{ ...commonOpts, indexAxis:'y', plugins:{...commonOpts.plugins, legend:{display:false}} }
+  });
+}
+
+function renderCharts(){
+  if(!chartSuc) return;
+  const lbl = metricLabel();
+
+  // Por sucursal: metrica (barras) + Nº productos (linea)
+  const porSuc = new Map();
+  filtered.forEach(p=>{
+    if(!porSuc.has(p.tienda)) porSuc.set(p.tienda, {val:0,count:0});
+    const r=porSuc.get(p.tienda); r.val+=metricValue(p)||0; r.count+=1;
+  });
+  const sucLabels=[...porSuc.keys()];
+  chartSuc.data.labels = sucLabels;
+  chartSuc.data.datasets[0].label = lbl;
+  chartSuc.data.datasets[0].data = sucLabels.map(t=>porSuc.get(t).val);
+  chartSuc.data.datasets[1].data = sucLabels.map(t=>porSuc.get(t).count);
+  chartSuc.update();
+
+  // Top 10 marcas / familias por metrica
+  const porMarca = new Map(), porFamilia = new Map();
+  filtered.forEach(p=>{
+    const v = metricValue(p)||0;
+    if(p.marca) porMarca.set(p.marca, (porMarca.get(p.marca)||0)+v);
+    if(p.familia) porFamilia.set(p.familia, (porFamilia.get(p.familia)||0)+v);
+  });
+  const tm = topN(porMarca, 10);
+  chartMarca.data.labels = tm.map(x=>x[0]);
+  chartMarca.data.datasets[0].label = lbl;
+  chartMarca.data.datasets[0].data = tm.map(x=>x[1]);
+  chartMarca.update();
+
+  const tf = topN(porFamilia, 10);
+  chartFamilia.data.labels = tf.map(x=>x[0]);
+  chartFamilia.data.datasets[0].label = lbl;
+  chartFamilia.data.datasets[0].data = tf.map(x=>x[1]);
+  chartFamilia.update();
+}
+
 function renderTable(){
   const start=page*PAGE, end=Math.min(start+PAGE,filtered.length);
   const slice=filtered.slice(start,end);
   const tbody=document.getElementById('tbody');
-  if(!slice.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-muted)">Sin resultados</td></tr>';return;}
+  if(!slice.length){tbody.innerHTML='<tr><td colspan="13" style="text-align:center;padding:40px;color:var(--text-muted)">Sin resultados</td></tr>';return;}
   function fmtRot(v){if(!v||v==0)return '<span style="color:var(--text-muted)">—</span>';return '$'+Number(v).toLocaleString('es-CL')}
   tbody.innerHTML=slice.map(p=>`
     <tr>
@@ -306,12 +522,11 @@ function renderTable(){
       <td style="max-width:280px">${p.descripcion}</td>
       <td style="color:var(--text-muted)">${p.hiper||'—'}</td>
       <td class="num">${fmt(p.stock_disp)}</td>
+      <td class="num">${fmt(p.bodega_fis)}</td>
+      <td class="num">${fmtVal(p.costo_prom)}</td>
       <td class="num">${fmtVal(p.stock_val)}</td>
       <td>${uvLabel(p.ultima_venta)}</td>
-      <td class="num">${fmtRot(p.r3m)}</td>
-      <td class="num">${fmtRot(p.r6m)}</td>
       <td class="num">${fmtRot(p.r12m)}</td>
-      <td class="num">${fmtRot(p.r24m)}</td>
     </tr>`).join('');
 }
 
@@ -341,7 +556,8 @@ function sortBy(col){
 }
 
 function clearFilters(){
-  ['f-suc','f-fam','f-marca','f-uv'].forEach(id=>document.getElementById(id).value='');
+  ['f-suc','f-fam','f-marca','f-uv','f-stock'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-abc').value='D';
   document.getElementById('f-search').value='';
   document.getElementById('f-sub').value='';
   page=0;populate();
@@ -354,24 +570,61 @@ function populateSelect(id,values,allLabel='Todas'){
   if(cur) sel.value=cur;
 }
 
-function init(){
-  // selects dinámicos
+// Refresca selects + filtros para el DATA actualmente cargado (se llama al
+// primer login Y cada vez que se cambia de pestaña D / 360).
+function refreshSelects(){
   populateSelect('f-suc',[...new Set(DATA.map(p=>p.tienda))]);
+  document.getElementById('f-abc').value='D';
+  document.getElementById('f-stock').value='';
   populateSelect('f-fam',[...new Set(DATA.map(p=>p.familia).filter(Boolean))]);
   populateSelect('f-sub',[...new Set(DATA.map(p=>p.subfamilia).filter(Boolean))]);
   populateSelect('f-marca',[...new Set(DATA.map(p=>p.marca).filter(Boolean))]);
-  // listeners
-  ['f-suc','f-fam','f-sub','f-marca','f-uv'].forEach(id=>document.getElementById(id).addEventListener('change',()=>{page=0;populate()}));
-  document.getElementById('f-search').addEventListener('input',()=>{page=0;populate()});
+  document.getElementById('f-search').value='';
+  page=0;
   populate();
+}
+
+function init(){
+  // listeners (una sola vez)
+  ['f-suc','f-abc','f-stock','f-fam','f-sub','f-marca','f-uv'].forEach(id=>document.getElementById(id).addEventListener('change',()=>{page=0;populate()}));
+  document.getElementById('f-search').addEventListener('input',()=>{page=0;populate()});
+  initCharts();
+  refreshSelects();
   document.getElementById('ts-update').textContent='Datos al 2026-08-24 · '+new Date().toLocaleDateString('es-CL');
   document.getElementById('loading').classList.add('hidden');
 }
 
+// ── PESTAÑAS: Categoría D (completo, 6.185) vs Extracto 360 días (2.326,
+// universo = SOLO los códigos de "Stock sin venta 360 dias.xlsx"; todo el
+// resto de cada producto -- stock, costo, ultima venta, rotacion,
+// descripcion/familia/marca -- sale de SQLite, no del Excel). Se cachea cada
+// dataset para no volver a pedir el JSON al servidor al ir y volver.
+let currentTab = 'd';
+const DATASET_CACHE = {};
+function switchTab(tab){
+  if(tab===currentTab) return;
+  currentTab = tab;
+  document.getElementById('tab-d').classList.toggle('on', tab==='d');
+  document.getElementById('tab-360').classList.toggle('on', tab==='360');
+  const file = tab==='d' ? 'data_d.json' : 'data_360.json';
+  if(DATASET_CACHE[file]){
+    DATA = DATASET_CACHE[file];
+    refreshSelects();
+    return;
+  }
+  document.getElementById('loading').classList.remove('hidden');
+  fetch(file).then(r=>r.json()).then(d=>{
+    DATASET_CACHE[file]=d;
+    DATA=d;
+    refreshSelects();
+    document.getElementById('loading').classList.add('hidden');
+  });
+}
+
 // Export Excel (CSV con BOM para Excel)
 function exportExcel(){
-  const cols=['Tienda','Marca','Familia','Subfamilia','Código','Descripción','Hiperfamilia','Stock Disp','Stock Valoriz','Última Venta','Rot 3M $','Rot 6M $','Rot 12M $','Rot 24M $'];
-  const rows=filtered.map(p=>[p.tienda,p.marca,p.familia,p.subfamilia||'',p.codigo,`"${p.descripcion.replace(/"/g,'""')}"`,p.hiper,p.stock_disp,p.stock_val,p.ultima_venta,p.r3m,p.r6m,p.r12m,p.r24m]);
+  const cols=['Tienda','Categoría','Marca','Familia','Subfamilia','Código','Descripción','Hiperfamilia','Stock Disp','Bodega Físico','Costo Prom','Stock Valoriz','Última Venta','Rot 12M $'];
+  const rows=filtered.map(p=>[p.tienda,p.abc,p.marca,p.familia,p.subfamilia||'',p.codigo,`"${p.descripcion.replace(/"/g,'""')}"`,p.hiper,p.stock_disp,p.bodega_fis,p.costo_prom,p.stock_val,p.ultima_venta,p.r12m]);
   const csv='﻿'+[cols,...rows].map(r=>r.join(';')).join('\n');
   const a=document.createElement('a');
   a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
@@ -383,7 +636,7 @@ function exportExcel(){
 function loadData(){
   fetch('data_d.json')
     .then(r=>r.json())
-    .then(d=>{DATA=d;init();})
+    .then(d=>{DATA=d;DATASET_CACHE['data_d.json']=d;init();})
     .catch(()=>{
       document.getElementById('loading').innerHTML='Error cargando datos. Contacte al administrador.';
       document.getElementById('loading').classList.remove('hidden');

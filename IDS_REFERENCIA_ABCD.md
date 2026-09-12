@@ -1,4 +1,4 @@
-# IDs de Referencia — App ABCD Foviedo
+# IDs de Referencia — App ABCD Sistemas A.G.
 
 Generado: 2026-08-25 | Verificado contra SQLite `foviedo_local.db` y ERP.
 
@@ -13,6 +13,11 @@ Generado: 2026-08-25 | Verificado contra SQLite `foviedo_local.db` y ERP.
 | LAS CABRAS | 06 | 06 |
 | SAN VICENTE | 05 | 05 |
 | LITUECHE | 11 | 11 |
+| CENTRO DISTRIBUCION | 08 | 08 |
+
+> Centro Distribución agregada 2026-09-12 vía `agregar_stock_360.py` (merge puntual
+> de `Stock sin venta 360 dias.xlsx`). Único dato disponible: bodega 23 "CENTRO DE
+> DISTRIBUCION", 7 productos.
 
 ---
 
@@ -30,9 +35,9 @@ Solo bodegas de **facturación** (PEM, SEM, etc.) — NO bodegas de tránsito ni
 ### El Manzano (04)
 | ID Bodega | Nombre / Tipo |
 |:---:|---|
-| 13 | PEM — Principal El Manzano |
-| 22 | SEM — Secundaria El Manzano |
-| 24 | Bodega adicional EM |
+| 13 | SEM — Sala El Manzano (corregido 2026-09-12, estaba invertido con 22) |
+| 22 | PEM — Patio El Manzano |
+| 24 | CEM — Calzada El Manzano |
 
 ### San Vicente (05)
 | ID Bodega | Nombre / Tipo |
@@ -54,6 +59,11 @@ Solo bodegas de **facturación** (PEM, SEM, etc.) — NO bodegas de tránsito ni
 | 60 | Bodega LT 1 |
 | 62 | Bodega LT 2 (tiene datos en r_stock_productos) |
 | 78 | Bodega LT 3 |
+
+### Centro Distribución (08)
+| ID Bodega | Nombre / Tipo |
+|:---:|---|
+| 23 | CENTRO DE DISTRIBUCION — única bodega usada para esta sucursal (agregada 2026-09-12) |
 
 ---
 

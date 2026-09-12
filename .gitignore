@@ -6,3 +6,7 @@ __pycache__/
 # Datos generados — no van a git
 data_d.json
 *.json
+
+# Excels fuente (stock/costo interno) — nunca al repo publico
+*.xlsx
+*.xls
