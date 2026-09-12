@@ -12,13 +12,13 @@ Login: rrojas / categoriaD (hash SHA-256, no guardar contraseña en texto claro)
 
 ## Cómo actualizar datos
 1. El jefe entrega nuevo Excel con productos D → guardar en `C:\Users\alejandro\Desktop\D para Alejandro.xlsx`
-2. Correr: `E:\python-portable\python.exe "E:\SQL\ABCD\generar_data.py"`
-3. El script genera `E:\SQL\ABCD\data_d.json` automáticamente
-4. Commit y push: `git add data_d.json && git commit -m "data: actualizar D" && git push`
+2. Correr: `E:\python-portable\python.exe "E:\ABCD\generar_data.py"`
+3. El script genera `E:\ABCD\data_d.json` automáticamente
+4. `data_d.json` NO va a git (ver `.gitignore` — removido por seguridad, contiene datos de stock ERP). Solo commitear si se toca `index.html` u otro archivo trackeado.
 
 ## Servidor local (prueba)
 ```
-E:\python-portable\python.exe -m http.server 8090 --directory "E:\SQL\ABCD"
+E:\python-portable\python.exe -m http.server 8090 --directory "E:\ABCD"
 ```
 Abrir: http://localhost:8090
 
@@ -50,7 +50,7 @@ ANTES de tocar cualquier archivo:
 | Archivo | Editable | Descripción |
 |---|:---:|---|
 | index.html | ✅ | App principal con login embebido |
-| data_d.json | ❌ | Generado por script (rastreado en git) |
+| data_d.json | ❌ | Generado por script (NO va a git, ver .gitignore) |
 | generar_data.py | ✅ | Script de regeneración (excluido de git) |
 | IDS_REFERENCIA_ABCD.md | ✅ | IDs de sucursales, bodegas, tablas SQLite |
 | CLAUDE.md | ✅ | Instrucciones técnicas del proyecto |

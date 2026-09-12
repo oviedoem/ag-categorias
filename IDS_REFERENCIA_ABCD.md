@@ -129,7 +129,7 @@ ya que ese valor viene directo del ERP y es el mismo para todas las sucursales.
 ## Script de regeneración
 
 ```
-E:\python-portable\python.exe "E:\SQL\ABCD\generar_data.py"
+E:\python-portable\python.exe "E:\ABCD\generar_data.py"
 ```
 
-Genera: `E:\SQL\ABCD\data_d.json` (5,757 productos, ~1.5 MB)
+Genera: `E:\ABCD\data_d.json` (5,757 productos, ~1.5 MB)
