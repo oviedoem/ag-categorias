@@ -42,8 +42,8 @@ y puntual (ver "Refresco de bodegas" más abajo), usa lo que ya está en
 | `CLAUDE.md` | ✅ | Este archivo |
 | `IDS_REFERENCIA_ABCD.md` | ✅ | IDs de sucursales, bodegas, tablas SQLite |
 | `.github/workflows/deploy.yml` | ✅ | CI/CD GitHub Pages automático |
-| `data_d.json` | ❌ | Pestaña "Categoría D" — generado, contiene costo real, NUNCA al repo público |
-| `data_360.json` | ❌ | Pestaña "Extracto 360 días" — generado, mismo motivo |
+| `data_d.json` | ✅ (desde 13-09-2026) | Pestaña "Categoría D" — generado, decisión explícita del usuario de publicarlo con costo real incluido |
+| `data_360.json` | ✅ (desde 13-09-2026) | Pestaña "Extracto 360 días" — ídem |
 | `generar_data.py` y todos los `agregar_*.py` / `recalcular_*.py` | ❌ | Contienen rutas internas |
 | `Stock sin venta 360 dias.xlsx`, `actualizar.xlsx` | ❌ | Excels fuente con datos de stock/costo interno |
 
@@ -146,8 +146,12 @@ E:\python-portable\python.exe -m http.server 8090 --directory "E:\ABCD"
   usuario decidió explícitamente no rotar la contraseña ni reescribir el
   historial. Cualquier sesión futura debe saber que este login no es
   confiable como "acceso restringido" real.
-- `data_d.json` y `data_360.json` NUNCA van al repo — contienen costo real,
-  no solo stock. Confirmado en `.gitignore` (`*.json`, `*.xlsx`, `*.xls`).
+- ⚠️ **`data_d.json` y `data_360.json` SÍ van al repo público desde 13-09-2026**
+  (decisión explícita del usuario, confirmada tras avisarle que incluyen Costo
+  Promedio real — precio de compra — no solo stock). Antes de esa fecha
+  estaban excluidos a propósito; si algún proceso los vuelve a sacar del repo,
+  documentar el motivo aquí. `*.xlsx`/`*.xls` (Excels fuente) siguen sin ir
+  al repo — esos sí quedan excluidos en `.gitignore`.
 - Credenciales SQL: solo en `E:\config\credenciales_db.enc` (DPAPI) /
   `E:\ferreteria-oviedo\credenciales_db.ini`, nunca en archivos de este repo.
 - Token GitHub: Windows Credential Manager (wincredman), nunca en archivos.

@@ -3,9 +3,11 @@ __pycache__/
 *.py
 *.json.bak
 
-# Datos generados — no van a git
-data_d.json
+# Datos generados — publicados a proposito desde 2026-09-13 (decision del
+# usuario, incluye costo real). Otros *.json (configs, backups) se ignoran.
 *.json
+!data_d.json
+!data_360.json
 
 # Excels fuente (stock/costo interno) — nunca al repo publico
 *.xlsx
