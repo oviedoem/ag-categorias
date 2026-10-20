@@ -5,18 +5,24 @@ Repo GitHub: https://github.com/oviedoem/ag-categorias (público)
 App pública: https://oviedoem.github.io/ag-categorias/
 Última actualización: 2026-09-12 | v1.1
 
+## Sesion 2026-10-16 (Pipeline refresh)
+- Pipeline ejecutado paso a paso: 8/8 (generar_data con crash cosmetico conocido). data_d.json 6.185 productos, data_360.json 2.326.
+- Deploy: NA (app en GitHub Pages; data_*.json no van a git). Git: sin commit. Sin errores nuevos.
+- ACTUALIZAR_TODO.bat enganchado al registro de corridas (encabezado de 7 lineas, proyecto abcd): cada corrida queda en el calendario del Centro de Control con su log. Respaldo: E:\_ARCHIVO_FERRETERIA\abcd-bat-respaldo-20261016. El .bat se paso a fin de linea CRLF (obligatorio: con solo LF los goto/etiquetas fallan). Nota: generar_data.py sigue con el crash cosmetico de UnicodeEncodeError, asi que el .bat termina en error en el paso 1 (decision del dueno: no corregir).
+
+## Sesion 2026-10-20 (fix cp1252 en el pipeline)
+- Causa: la corrida del 19-10 19:05 desde el Centro de Control termino en error: `generar_data.py` imprimia `✓` y con la salida entubada Python usa cp1252 (UnicodeEncodeError). El paso 1 ya habia escrito `data_d.json` con 5.757 y los pasos 2-8 no corrieron (data_360.json quedo del 16-10).
+- Arreglo en codigo (NO con PYTHONIOENCODING, que no sirve con `python -I`): los 8 `.py` llevan tras su primer import `sys.stdout.reconfigure(errors="replace")` y lo mismo para stderr; el `✓` de `generar_data.py` paso a `OK`. El crash cosmetico queda resuelto (reemplaza la nota PENDIENTE de arriba).
+- Prueba: pipeline completo en copia de scratch con salida entubada cp1252 (subprocess capture_output, sin -I): 8/8 rc=0, data_d.json 6.185, data_360.json 2.326.
+- Corrida real 2026-10-20 16:32 desde el Centro de Control: estado ok, 0 avisos, 23 s; data_d.json 6.185 y data_360.json 2.326 sincronizados (log `abcd/2026-10-20_163228_ok.log`, calendario OK). Indice del proyecto: este archivo + AGENTS.md.
+- Respaldo de los .py previos: `E:\_ARCHIVO_FERRETERIA\abcd-py-respaldo-20261020`.
+
 ## REGLA FLUJO ACTUAL — leer al inicio de cada sesión
 
 Revisar fechas de modificación de archivos en la raíz. Los más recientes marcan el flujo actual:
 ```powershell
 Get-ChildItem "E:\ABCD" -File | Sort-Object LastWriteTime -Descending | Select-Object Name, LastWriteTime | Select-Object -First 15
 ```
-
-## PENDIENTE (sin corregir a pedido del usuario)
-`generar_data.py` crashea en el último `print()` de éxito con `UnicodeEncodeError`
-(carácter `✓`, consola cp1252) — fix conocido (`sys.stdout.reconfigure(encoding='utf-8')`)
-pero el usuario pidió explícitamente NO aplicarlo. El script igual completa los 5 pasos
-y escribe `data_d.json` antes de crashear — el crash es cosmético, no pierde datos.
 
 ## Propósito
 Visualizar productos con categoría D (sin venta año móvil, con stock disponible)

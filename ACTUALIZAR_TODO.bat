@@ -1,4 +1,11 @@
 @echo off
+if not defined OVIEDO_REG if exist "E:\CONOCIMIENTO DEL NEGOCIO\control-center\registrar-corrida.js" goto :con_registro
+goto :inicio_real
+:con_registro
+set OVIEDO_REG=1
+"E:\nodejs-portable\node.exe" "E:\CONOCIMIENTO DEL NEGOCIO\control-center\registrar-corrida.js" abcd "%~f0" %*
+exit /b %errorlevel%
+:inicio_real
 REM ACTUALIZAR_TODO.bat -- Pipeline completo de ABCD (Categoria D)
 REM Corre todos los pasos en el orden correcto para regenerar data_d.json y
 REM data_360.json desde cero. Requiere que ya existan en E:\ABCD:
