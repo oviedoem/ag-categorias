@@ -168,3 +168,16 @@ E:\python-portable\python.exe -m http.server 8090 --directory "E:\ABCD"
 - `data_d.json` / `data_360.json` se regeneran completos cada vez — no editar a mano.
 - La app es estática: `index.html` + los 2 JSON, sin backend.
 - `*.py`, `*.json`, `*.xlsx` excluidos de git por `.gitignore`.
+
+## Relevo Codex ABCD (2026-11-04)
+- Auditoría: última corrida registrada `2026-10-20_163228_ok.log`, estado OK, 8/8 pasos, 0 avisos; `data_d.json` y `data_360.json` quedaron actualizados durante esa corrida.
+- El fallo de codificación observado el 2026-10-19 quedó corregido en los 8 scripts mediante salida tolerante a caracteres; no se ejecutó el pipeline en esta sesión.
+- Inventario generado en `historico\inventario_2026-11-04` (25 archivos). La revisión de orden encontró 0 candidatos fuera de `.git` e histórico; manifiesto en `historico\2026-11-04-orden\MANIFIESTO.md`.
+- Documentación, auditoría y copia saneada de Drive preparadas el 2026-11-04. No se copiaron JSON de datos, Excels fuente ni credenciales a Drive.
+- Observaciones: `pip check` mantiene una incompatibilidad existente entre `pdfplumber` y `Pillow`; la prueba SQL local fue no concluyente por DPAPI/TCP y no se insistió; el Excel esperado en Escritorio no existe, pero hay copia local en el proyecto.
+- Esta sesión no hizo git, deploy, pipeline ni cambios en datos del ERP.
+
+## Relevo final Codex — 2026-11-04
+- Informe `docs\relevo\GIT_DATOS_2026-11-04.md`: `data_d.json` y `data_360.json` están versionados deliberadamente desde `8edc4e5` (13-09-2026), con excepciones explícitas en `.gitignore`; recomendación: mantenerlos.
+- Corrida registrada `2026-11-04_010439_ok.log`: `data_d.json` 6.185 productos con 428 nuevos y `data_360.json` 2.326; los Excel permanecen fijos por decisión del dueño.
+- La copia saneada de `G:\Mi unidad\PROYECTO_ABCD` debe reflejar esta documentación. No se ejecutó git ni se cambiaron índices.
