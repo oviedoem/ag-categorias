@@ -109,17 +109,8 @@ Vicente ~100%, Litueche ~100%, Las Cabras 99%, El Manzano 99%, Isabel Riquelme
 97%. La diferencia restante es desfase normal de sincronización SQL-Excel
 (horas/días — ver skill `flujo-stock-erp`), no datos faltantes.
 
-## Refresco de bodegas en `r_stock_productos` (manual, puntual)
-El SQLite local no tenía cobertura completa de todas las bodegas usadas por
-esta app. Se bajaron en vivo y solo lectura desde `Foviedo.dbo.R_STOCK_PRODUCTOS`
-(pausas de 3s por bodega para no saturar el SQL Server ni bloquear IP) las 26
-bodegas de facturación + extra: 13,22,24,4,86,94,33,34,35,39,40,44,60,62,78,23,
-83,85,99,69,77,96,97,95,64,74. Se detectó que 5 de ellas (13,22,24,62,23) tenían
-datos viejos de antes de esta sesión (ej. código AMS006 en bodega 13: 1 unidad
-en el SQLite viejo vs 94 reales — verificado con `http://localhost:8934`,
-herramienta de Análisis de Stock). Si vuelve a haber discrepancias grandes vs
-un Excel fresco, repetir este refresco (script ad-hoc, no forma parte de
-`ACTUALIZAR_TODO.bat` porque es lento — ~30-60 min — y no hace falta cada vez).
+## Refresco de `r_stock_productos` (automatico desde 11-11-2026)
+La tabla `r_stock_productos` del SQLite (proyecto SQL) ya NO es una carga manual y puntual: la refresca el PASO 2C de `ACTUALIZAR_XLSM_SQL.bat` del proyecto SQL (script `scripts/cargar_r_stock_productos.py`, una sola consulta de solo lectura por las 27 bodegas de facturacion + extra). Antes quedo desactualizada (14.603 de 110.516 filas con valores distintos al 11-11). ABCD (Tier B) lee lo que dejo la ultima corrida de SQL: conviene correr SQL antes que ABCD. Ver el `CLAUDE.md` de SQL.
 
 ## Marca / diseño (2026-09-12)
 La app dejó de usar el nombre/logo "Foviedo" — ahora es **"Sistemas A.G."**
@@ -187,3 +178,4 @@ E:\python-portable\python.exe -m http.server 8090 --directory "E:\ABCD"
 - Hallazgo de documentacion: los JSON SI estan versionados (el `.gitignore` los des-ignora con `!data_d.json`/`!data_360.json`) y el repo `oviedoem/ag-categorias` es PUBLICO con GitHub Pages: costo real y valorizado son publicos por decision explicita del dueno (13-09-2026). La linea 'Deploy: NA... data_*.json no van a git' y el recordatorio de `ACTUALIZAR_TODO.bat` ('NO van a git') estan desactualizados. El pipeline NO publica: hay que hacer commit + push a mano (GitHub Actions despliega Pages). Hoy lo publicado difiere de lo local.
 - Blindaje propio nuevo: `scripts/VERIFICAR_BLINDAJE.bat` + `scripts/verificar_blindaje.py` (referencia `scripts/blindaje_baseline.json`, 9 archivos criticos): 0 fallas, 3 avisos informativos (lo publicado difiere de lo local; repo y Pages publicos por decision del dueno). Orden: 0 fallas, 0 avisos. Pendiente de git sin tocar: `docs/`, `historico/`, `scripts/` (sesiones de orden del 03 y 04-11) y los 2 JSON modificados.
 - ACTUALIZACION 11-11 00:25 (orden del dueno): el pipeline AHORA publica solo, sin pasos manuales. Publicado con los datos de hoy (commits `55743ad` y `26e53c9`, Pages identico al local). Prueba de punta a punta desde el panel: ok, 28 s; sin cambios de datos no hace commit y verifica Pages (PUBLICADO). Las herramientas internas (`scripts/`, `docs/`, `historico/`) NO se versionan (excluidas en `.git/info/exclude`) porque GitHub Pages publica todo el repo; quedan solo en este PC. Blindaje: 11 archivos criticos con referencia refrescada.
+- ACTUALIZACION 11-11 00:40: corrida con el stock ya fresco (tras corregir `r_stock_productos`): 1.220 productos de `data_d.json` y 311 de `data_360.json` cambiaron (stock por bodega, costo en 364, valorizado en 272); valorizado clase D 605.578.294 -> 600.737.863; publicado solo (commit `35ecc50`, Pages = local). 2 productos de San Vicente (`SOLC0053`, `SOLC0056`) no tienen costo en el ERP y conservan el valorizado del Excel (el blindaje lo avisa).
