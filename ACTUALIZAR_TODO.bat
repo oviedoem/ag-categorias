@@ -60,7 +60,9 @@ if errorlevel 1 goto :error
 
 echo.
 echo === OK -- pipeline completo. Revisar la app en http://localhost:8090 ===
-echo Recordatorio: data_d.json y data_360.json NO van a git (ver .gitignore).
+call "%~dp0scripts\PUBLICAR_DATOS.bat"
+if errorlevel 1 goto :error
+echo Publicado automaticamente: https://oviedoem.github.io/ag-categorias/
 goto :fin
 
 :error
