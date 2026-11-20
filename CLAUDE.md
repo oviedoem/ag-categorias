@@ -185,3 +185,9 @@ E:\python-portable\python.exe -m http.server 8090 --directory "E:\ABCD"
 - Dependencia: lee SQLite `E:\SQL\db\foviedo_local.db` ya sincronizado (el pipeline de SQL corrio 16:40 el mismo dia; `r_stock_productos` 111.784 filas refrescada por el PASO 2C). No consulta el ERP en vivo.
 - Blindaje `scripts/verificar_blindaje.py`: antes 2 fallas (datos de 5 dias), despues 0 fallas y 2 avisos esperados (2 productos sin costo_prom: 05/SOLC0053, 05/SOLC0056; repo y Pages publicos por decision del dueno 13-09). Pages 200.
 - Nota: correr el blindaje con `python scripts\verificar_blindaje.py` directo, no con el .bat (se queda esperando una tecla).
+
+## Sesion 2026-11-20 (cierre de corrida 2026-11-19)
+- Log `control-center\registro\logs\abcd\2026-11-20_001925_ok.log`: pipeline 8/8 OK. `data_d.json` quedó con 6.185 productos y `data_360.json` con 2.326.
+- Resultados relevantes: 3 productos sin costo_prom real; el flujo conservó el valorizado del Excel para 2. Valorizado clase D: 600.753.958. No se inventaron valores ni se modificó el ERP.
+- Publicación propia completada: commit/push `066316c` a `oviedoem/ag-categorias`; GitHub Pages confirmó archivos idénticos a los locales.
+- Avisos esperados: 2 productos sin costo_prom (`05/SOLC0053`, `05/SOLC0056`) y repo/Pages públicos por decisión documentada. Blindaje directo: 0 fallas, 2 avisos. Orden conservador: 0 candidatos.
