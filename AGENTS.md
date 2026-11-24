@@ -1,6 +1,6 @@
 # AGENTS.md — App ABCD Sistemas A.G.
 
-Última actualización: 2026-08-25 | Versión app: v1.0
+Última actualización: 2026-11-24 | versión documental 1.2
 
 ## Qué hace esta app
 Muestra los productos con categoría D (sin venta año móvil, con stock) de 5 sucursales.
@@ -10,11 +10,33 @@ Agrega la última fecha de venta histórica + rotación 3/6/12/24 meses desde SQ
 https://oviedoem.github.io/ag-categorias/
 Login: usuario `rrojas` (hash SHA-256 embebido en index.html — la contraseña real NUNCA se guarda en archivos de texto, ver CLAUDE.md)
 
-## Cómo actualizar datos
-1. El jefe entrega nuevo Excel con productos D → guardar en `C:\Users\alejandro\Desktop\D para Alejandro.xlsx`
-2. Correr: `E:\python-portable\python.exe "E:\ABCD\generar_data.py"`
-3. El script genera `E:\ABCD\data_d.json` automáticamente
-4. `data_d.json` NO va a git (ver `.gitignore` — removido por seguridad, contiene datos de stock ERP). Solo commitear si se toca `index.html` u otro archivo trackeado.
+## Fuente de datos y Excel base
+- E:\ABCD\D para Alejandro.xlsx es el Excel base del jefe. Se entrega una vez por diseño; no se espera un Excel nuevo en cada corrida.
+- E:\ABCD\Stock sin venta 360 dias.xlsx y E:\ABCD\actualizar.xlsx son fuentes locales auxiliares.
+- E:\SQL\db\foviedo_local.db es la fuente SQLite de stock, bodegas, descripciones, costos, ventas y rotación. ABCD no consulta el ERP en vivo.
+- El Excel de categoría ABC es la excepción: esa clasificación proviene del Excel porque no existe en SQLite.
+- No leer, modificar ni imprimir credenciales. No editar manualmente los JSON generados.
+
+## Pipeline vigente
+Ejecutar solo desde el Centro de Control, después de que SQL haya terminado su sincronización.
+
+E:\ABCD\ACTUALIZAR_TODO.bat
+
+1. generar_data.py — genera data_d.json desde el Excel base y SQLite.
+2. agregar_stock_360.py — incorpora el universo de 360 días y Centro de Distribución.
+3. agregar_abc.py — agrega categoría A/B/C/D desde el Excel base.
+4. agregar_bodegas.py — agrega disponible/físico por bodega.
+5. agregar_costo.py — agrega costo promedio real con fallback entre bodegas.
+6. agregar_costo_actualizar_em.py — completa huecos de El Manzano desde actualizar.xlsx.
+7. recalcular_valorizado.py — calcula costo por disponible.
+8. generar_data_360.py — genera data_360.json desde SQLite.
+
+El BAT aborta ante un error de cualquier paso y luego llama a scripts\PUBLICAR_DATOS.bat. El pipeline usa CRLF; no convertirlo a LF porque las etiquetas y goto pueden fallar.
+
+## Publicación
+scripts\PUBLICAR_DATOS.bat valida la cuenta Git ferreteriaoviedo.elmanzano@gmail.com, el remoto oviedoem/ag-categorias y que ambos JSON sean válidos y de la fecha esperada. Si hay cambios, hace commit/push solo de data_d.json y data_360.json; GitHub Pages publica desde main y el script espera que los datos públicos coincidan con los locales.
+
+Los JSON están versionados deliberadamente desde el 13-09-2026 porque el repositorio y GitHub Pages son públicos por decisión del dueño. Los Excel fuente no se publican.
 
 ## Servidor local (prueba)
 ```
@@ -40,28 +62,34 @@ Botón "⬇ Excel" genera CSV UTF-8 con BOM compatible con Excel chileno (separa
 - Verde = 2025–2026
 - Gris itálica = Sin registro en BD histórica
 
-## Safe-Change Protocol
-ANTES de tocar cualquier archivo:
-- TOCO: index.html o generar_data.py
-- RAZÓN: cambio solicitado
-- NO TOCO: data_d.json (generado), foviedo_local.db (solo lectura), otros proyectos
+## Blindaje y cambios seguros
+Verificación de solo lectura:
+
+`E:\python-portable\python.exe -I E:\ABCD\scripts\verificar_blindaje.py`
+
+No usar `--guardar` sin orden expresa del dueño. Antes de tocar un archivo declarar TOCO / ARCHIVO / RAZÓN / NO TOCO, respaldar el archivo y no modificar SQLite ni otros proyectos.
+
+Los ocho scripts Python configuran la salida con `errors="replace"` para que el carácter ✓ no rompa el pipeline con `UnicodeEncodeError` cuando la salida está redirigida.
 
 ## Archivos en esta carpeta
 | Archivo | Editable | Descripción |
 |---|:---:|---|
 | index.html | ✅ | App principal con login embebido |
-| data_d.json | ❌ | Generado por script (NO va a git, ver .gitignore) |
-| generar_data.py | ✅ | Script de regeneración (excluido de git) |
-| data_360.json | ❌ | Pestaña "Extracto 360 días" — generado por script (NO va a git) |
-| generar_data_360.py | ✅ | Regenera data_360.json (excluido de git) |
-| agregar_stock_360.py | ✅ | Merge puntual 2026-09-12 (excluido de git) |
-| agregar_bodegas.py | ✅ | Agrega desglose Bodega Disp./Físico (excluido de git) |
-| agregar_costo.py | ✅ | Agrega Costo Prom. real (excluido de git) |
-| agregar_abc.py | ✅ | Agrega categoría ABC (excluido de git) |
-| recalcular_valorizado.py | ✅ | Recalcula Stock Valorizado = Costo x Disp (excluido de git) |
-| agregar_costo_actualizar_em.py | ✅ | Rellena costo/desc de El Manzano desde actualizar.xlsx (excluido de git) |
-| actualizar.xlsx | ❌ | Export fresco del jefe, El Manzano + CD (NO va a git) |
-| IDS_REFERENCIA_ABCD.md | ✅ | IDs de sucursales, bodegas, tablas SQLite |
-| CLAUDE.md | ✅ | Instrucciones técnicas del proyecto |
-| AGENTS.md | ✅ | Este archivo |
-| .github/workflows/deploy.yml | ❌ | Deploy automático a GitHub Pages |
+| data_d.json | ✅ | Datos generados de Categoría D, versionados y publicados |
+| generar_data.py | ✅ | Paso 1 del pipeline |
+| data_360.json | ✅ | Datos generados del Extracto 360 días, versionados y publicados |
+| generar_data_360.py | ✅ | Paso 8 del pipeline |
+| agregar_stock_360.py | ✅ | Merge del universo de 360 días |
+| agregar_bodegas.py | ✅ | Desglose de disponible/físico |
+| agregar_costo.py | ✅ | Costo promedio real |
+| agregar_abc.py | ✅ | Categoría ABC desde Excel |
+| recalcular_valorizado.py | ✅ | Stock valorizado = costo x disponible |
+| agregar_costo_actualizar_em.py | ✅ | Completa datos de El Manzano |
+| actualizar.xlsx | ❌ | Fuente local auxiliar, no se publica |
+| D para Alejandro.xlsx | ❌ | Excel base único del jefe, no se publica |
+| Stock sin venta 360 dias.xlsx | ❌ | Fuente local auxiliar, no se publica |
+| IDS_REFERENCIA_ABCD.md | ✅ | IDs de sucursales, bodegas y tablas SQLite |
+| CLAUDE.md | ✅ | Instrucciones técnicas e historial |
+| AGENTS.md | ✅ | Esta guía operativa |
+| scripts\PUBLICAR_DATOS.bat | ✅ | Validación y publicación de JSON |
+| scripts\verificar_blindaje.py | ✅ | Auditoría de integridad |
