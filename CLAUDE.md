@@ -191,3 +191,7 @@ E:\python-portable\python.exe -m http.server 8090 --directory "E:\ABCD"
 - Resultados relevantes: 3 productos sin costo_prom real; el flujo conservó el valorizado del Excel para 2. Valorizado clase D: 600.753.958. No se inventaron valores ni se modificó el ERP.
 - Publicación propia completada: commit/push `066316c` a `oviedoem/ag-categorias`; GitHub Pages confirmó archivos idénticos a los locales.
 - Avisos esperados: 2 productos sin costo_prom (`05/SOLC0053`, `05/SOLC0056`) y repo/Pages públicos por decisión documentada. Blindaje directo: 0 fallas, 2 avisos. Orden conservador: 0 candidatos.
+
+## Sesion 2026-11-26 (corrida desde el Centro de Control, cierre)
+- Log `abcd/2026-11-26_010248_ok.log`: ok, 0 avisos/errores. `data_360.json` 2.326 productos (42 sin descripcion real en SQL). Commit de datos `3f03502` publicado; GitHub Pages sirve archivos identicos a los locales (39 s).
+- Blindaje solo lectura: 0 fallas y 2 avisos conocidos (2 productos de San Vicente sin costo en el ERP: 05/SOLC0053 y 05/SOLC0056; repo y Pages publicos por decision del dueno del 13-09-2026); sin --guardar.
